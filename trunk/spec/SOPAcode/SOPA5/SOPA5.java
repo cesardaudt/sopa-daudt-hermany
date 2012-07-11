@@ -187,9 +187,9 @@ class Disco extends Thread
       for (int i=0; i < 20; ++i)
         {
         // sleep just 50 ms which is one disc turn here
-	try {sleep(50);} catch (InterruptedException e){}
+	    try {sleep(50);} catch (InterruptedException e){}
         System.err.println("disk made a turn");
-	}
+	    }
       // Here goes the code (2 lines) that generates an interrupt
       hint.P();
       hint.set(5);
@@ -252,14 +252,14 @@ class Processor extends Thread
       if (IR[0]=='I'&&IR[1]=='N'&&IR[2]=='T')
         {
         System.err.println(" SW INT... ");
-	kernel.run(IR[3]);
-	}
+	    kernel.run(IR[3]);
+	    }
       else
       if (IR[0]=='J'&&IR[1]=='P'&&IR[2]=='A')
         {
         System.err.println(" JUMPING... ");
-	PC = IR[3];
-	}
+	    PC = IR[3];
+	    }
       else
         System.err.println(" ??? ");
       // advance PC to next instruction
