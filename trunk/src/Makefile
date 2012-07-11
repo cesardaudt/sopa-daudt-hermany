@@ -7,6 +7,7 @@ JC = javac
 CLASSES = \
 		ConsoleListener.java\
 		GlobalSynch.java\
+		FileDescriptor.java\
 		Kernel.java\
 		MyWin.java\
 		ProcessList.java\

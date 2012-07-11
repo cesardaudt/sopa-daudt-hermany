@@ -2,6 +2,9 @@ import java.util.*;
 import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import javax.swing.*;
 
@@ -41,15 +44,18 @@ class SopaInterface {
         
     	//fru fru java
         JFrame.setDefaultLookAndFeelDecorated(true);
+        
         //Create and set up the window.
         jFrame = getJFrame();
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
         //Set up the content pane.
     	pane = jFrame.getContentPane();
     	pane.setLayout(new GridBagLayout());
     	c = new GridBagConstraints();
     	c.fill = GridBagConstraints.BOTH; //HORIZONTAL;
         addFixComponentsToPane();
+ 		
  		//Display the window.
         jFrame.pack();
         jFrame.setVisible(true);
@@ -92,33 +98,36 @@ class SopaInterface {
     }
     
     //update text display
-    public static void updateDisplay(int proc, int disk, int i)
-    {
+    synchronized public static void updateDisplay(int proc, int disk, int i) {
     	appendMsg("\n"+ "      " + Integer.toString(proc) + "\t      " +
     	 Integer.toString(disk) +"\t      " + 
     	 Integer.toString(i));
     }
+    
 	//adds element to list and redisplay list 
     public static void addToList(int PID, String name){
     	LinkedList changedList = ( (LinkedList) myLinkedLists.get(name));
+    	
     	//update linked list
     	changedList.add( Integer.toString(PID) );
+    	
     	//update screen structure 
         ( (JList) myJLists.get(name) ).setListData(changedList.toArray());
         jFrame.pack();
     }
     
 	//	removes element from list and redisplay list
-    public static void removeFromList(int PID, String name){
+    public static void removeFromList(int PID, String name) {
     	LinkedList changedList = ( (LinkedList) myLinkedLists.get(name));
     	int test = -1;
-    	if( !changedList.isEmpty() ){
+    	if( !changedList.isEmpty() ) {
     		test = Integer.parseInt( (String) changedList.removeFirst() );
-    		if ( test != PID ) 
-    		{
+    		if ( test != PID ) {
 				appendMsg("<INTERFACE> ERROR REMOVING " + PID + " FROM LIST: "+ name  + "\n" );
-			}else;
-		}else{
+			}
+			else;
+		}
+		else {
 			appendMsg("<INTERFACE> ERROR REMOVING FROM EMPTY LIST: " +name  + "\n" );
         }
     	( (JList) myJLists.get(name) ).setListData(changedList.toArray());    	

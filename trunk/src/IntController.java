@@ -28,7 +28,7 @@ class IntController {
 		if (n == memoryInterruptNumber)
 			number = n;
 		else {
-			number.offer(n);
+			numbers.offer(n);
 		}
 	}
 	

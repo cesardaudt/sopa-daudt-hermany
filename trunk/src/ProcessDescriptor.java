@@ -38,6 +38,7 @@ class ProcessDescriptor	{
 	
 	public int timeInTicks() {
 		System.err.println("Proc "+PID+" tickd " +time);
+		return --time;
 	}
 	
 	public boolean isLoading() {
