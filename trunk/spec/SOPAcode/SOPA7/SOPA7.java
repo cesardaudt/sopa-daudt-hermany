@@ -313,28 +313,28 @@ class Processor extends Thread
       if (IR[0]=='I'&&IR[1]=='N'&&IR[2]=='T')
         {
         System.err.println(" SW INT... ");
-	kernel.run(IR[3]);
-	}
+	    kernel.run(IR[3]);
+	    }
       else
       if (IR[0]=='J'&&IR[1]=='P'&&IR[2]=='A')
         {
         System.err.println(" JUMPING... ");
-	PC = IR[3];
-	}
+	    PC = IR[3];
+	    }
       else
         System.err.println(" ??? ");
       // advance PC to next instruction
 
       // Check for Hardware Interrupt and if so call the kernel
       if (hint.get() != 0)
-	{
-	// Call the kernel passing the interrupt number
-	kernel.run(hint.get());
-	// This goes here because only HW interrupts are reset in the controller
-	// But reseting the interrupt controller might be a task for the Kernel 
-	// in a real system.
-	hint.reset();
-	}
+    {
+    // Call the kernel passing the interrupt number
+    kernel.run(hint.get());
+    // This goes here because only HW interrupts are reset in the controller
+    // But reseting the interrupt controller might be a task for the Kernel 
+    // in a real system.
+    hint.reset();
+    }
       }
     }
   }
