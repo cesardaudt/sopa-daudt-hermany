@@ -51,9 +51,7 @@ class GlobalSynch extends Thread {
 	}
 	
 	public synchronized void advance() {
-		if (steimport java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;pMode == true)
+		if (stepMode == true)
 	  		lock.V();
 	}
 	
