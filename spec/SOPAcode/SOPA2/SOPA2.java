@@ -138,7 +138,7 @@ class Disco extends Thread
         // sleep just 50 ms which is one disc turn here
 	try {sleep(50);} catch (InterruptedException e){}
         System.err.println("disk made a turn");
-	}
+	    }
       }
     }
   public void roda()
@@ -187,8 +187,8 @@ class Processor extends Thread
       if (IR[3]=='L')
         {
         System.err.println(" Last byte is L : Request for disk");
-	dis.roda();
-	}
+	    dis.roda();
+	    }
       else
         System.err.println(" ??? ");
       // advance PC to next instruction

@@ -238,21 +238,21 @@ class Disco extends Thread
   public void load(String filename) throws IOException
     {
     FileReader f = new FileReader(filename);
-    StreamTokenizer tokémon = new StreamTokenizer(f);
+    StreamTokenizer tokemon = new StreamTokenizer(f);
     int bytes[] = new int[4];
-    int tok = tokémon.nextToken();
+    int tok = tokemon.nextToken();
     for (int i=0; tok != StreamTokenizer.TT_EOF && i<size; ++i)
       {
       for (int j=0; tok != StreamTokenizer.TT_EOF && j<4; ++j)
         {
-        if (tokémon.ttype == StreamTokenizer.TT_NUMBER )
-          bytes[j] = (int) tokémon.nval;
+        if (tokemon.ttype == StreamTokenizer.TT_NUMBER )
+          bytes[j] = (int) tokemon.nval;
         else
-        if (tokémon.ttype == StreamTokenizer.TT_WORD )
-          bytes[j] = (int) tokémon.sval.charAt(0); 
+        if (tokemon.ttype == StreamTokenizer.TT_WORD )
+          bytes[j] = (int) tokemon.sval.charAt(0); 
         else
           System.out.println("Unexpected token at disk image!"); 
-        tok = tokémon.nextToken();      
+        tok = tokemon.nextToken();      
         }
       data[i] = ((bytes[0]&255)<<24) | ((bytes[1]&255)<<16) | 
 		((bytes[2]&255)<<8) | (bytes[3]&255);

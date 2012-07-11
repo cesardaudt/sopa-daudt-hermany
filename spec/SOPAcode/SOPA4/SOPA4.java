@@ -186,9 +186,9 @@ class Disco extends Thread
       for (int i=0; i < 20; ++i)
         {
         // sleep just 50 ms which is one disc turn here
-	try {sleep(50);} catch (InterruptedException e){}
+	    try {sleep(50);} catch (InterruptedException e){}
         System.err.println("disk made a turn");
-	}
+	    }
       // Here goes the code (2 lines) that generates an interrupt
       hint.P();
       hint.set(5);
@@ -251,23 +251,23 @@ class Processor extends Thread
       if (IR[0]=='J'&&IR[1]=='P'&&IR[2]=='A')
         {
         System.err.println(" JUMPING... ");
-	PC = IR[3];
-	}
+	    PC = IR[3];
+	    }
       else
         System.err.println(" ??? ");
       // advance PC to next instruction
 
       // Check for Hardware Interrupt and if so call the kernel
-      if (hint.get() != 0)
-	{
-	// Call the kernel passing the interrupt number
-	kernel.run(hint.get());
-	// This goes here because only HW interrupts are reset in the controller
-	// But reseting the interrupt controller might be a task for the Kernel 
-	// in a real system.
-	hint.reset();
-	hint.V();
-	}
+        if (hint.get() != 0)
+	    {
+	    // Call the kernel passing the interrupt number
+	    kernel.run(hint.get());
+	    // This goes here because only HW interrupts are reset in the controller
+	    // But reseting the interrupt controller might be a task for the Kernel 
+	    // in a real system.
+	    hint.reset();
+	    hint.V();
+	    }
       }
     }
   }
