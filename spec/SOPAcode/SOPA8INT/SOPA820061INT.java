@@ -714,6 +714,7 @@ class Kernel
     {
     // Calls the interface
     // You need to inform the PIDs from the ready and disk Lists
+    //CÉSAR: NÃO DEVIA SER diskList.getFront().getPID() no segundo parâmetro?
     SopaInterface.updateDisplay(readyList.getFront().getPID(), 
           readyList.getFront().getPID(), interruptNumber);
     
