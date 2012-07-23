@@ -27,7 +27,8 @@ class Memory {
 		memoryWord = new int[p_size*n_part];
 		
 		// Initialize with the dummy program
-		init(0, 'J', 'P', 'A', 0);
+		for (int j = 0; j<1024; j++) 
+			init(j, 'J', 'P', 'A', 0);
 	}
 	
 	public int getPartitionSize() {
