@@ -62,10 +62,6 @@ class Kernel {
 		for(int j = 2; j < partitions; j++) {
 			partitionsList[j] = AVAILABLE_PARTITION;
 		}
-		
-		// Creates the dummy process - DONE IN initKernel() method
-		//readyList.pushBack( new ProcessDescriptor(0) );
-		//readyList.getBack().setPC(0);
 	}
 	// Each time the kernel runs it have access to all hardware components
 	
@@ -75,22 +71,22 @@ class Kernel {
 		for(int i = 0; i<pro.length; i++) {
 			runProcess(makeDummyProcess(), i);
 		}
-		initProcesses(1);
+		//initProcesses(5);
 	}
 	
-	private void initProcesses(int n) {
-		ProcessDescriptor aux;
-		
-		for(int i = 1; i <= n; i++) {
-			//TODO: ISSO PROVAVELMENTE NÃO TÁ FUNCIONANDO
-			aux = new ProcessDescriptor(i, 4, false);	
-			mem.superWrite(aux.getPartition() * mem.getPartitionSize()+i, dis[0].getData(i));	
-			readyList.pushBack(aux);
-		}
-	}
+//	private void initProcesses(int n) {
+//		ProcessDescriptor aux;
+//		
+//		for(int i = 1; i <= n; i++) {
+//			//TODO:
+//			aux = new ProcessDescriptor(i, freePartition(), false);	
+//			mem.superWrite(aux.getPartition() * mem.getPartitionSize()+i, dis[0].getData(i));	
+//			readyList.pushBack(aux);
+//		}
+//	}
 
 	public ProcessDescriptor makeDummyProcess() {
-		return new ProcessDescriptor(0, 0, false);
+		return new ProcessDescriptor(34, freePartition(), false);
 	}
 	
 	private int freePartition() {
@@ -107,7 +103,8 @@ class Kernel {
 		if(p != NO_FREE_PARTITION) {
 			ProcessDescriptor np = new ProcessDescriptor(n_Pid++, p, true);
 			partitionsList[p] = USED_PARTITION;
-			
+			np.setPC(p*mem.getPartitionSize());
+			System.err.println("\t\tProcess "+np.getPID()+" in partition "+p+"with pc="+np.getPC());
 			return np;
 		}
 		else {
@@ -124,10 +121,9 @@ class Kernel {
 		pro[cpuid].setPC(proc.getPC());
 		pro[cpuid].setReg(proc.getReg());
 		mem.setBaseRegister(proc.getPartition() * mem.getPartitionSize());
-		//TODO: FAZ SENTIDO ISSO?
+		//TODO:
 		mem.setLimitRegister(proc.getPartition() * mem.getPartitionSize() + mem.getPartitionSize() - 1);
-		proc.setTime(5);
-		
+		proc.setTime(8);
 		procLists[cpuid].pushBack(proc);
 	}
 	
@@ -193,10 +189,13 @@ class Kernel {
                 if(aux!=null) {
 					diskLists[val[0]].pushBack(aux);                 
                     dis[val[0]].roda(dis[val[0]].OPERATION_LOAD, val[1], 0);
+                    for(int i=0; i<dis[val[0]].getSize(); i++) {
+						mem.superWrite(aux.getPartition()*mem.getPartitionSize()+i, dis[val[0]].getData(i));
+                    }
                 }
             }
             else
-        		System.err.println("Invalid disk entered: please choose Disk 0 or 1.");
+        		System.err.println("Invalid disk: choose Disk 0 or 1.");
     	}
 	}
 	
@@ -215,7 +214,7 @@ class Kernel {
 		        
 		        runProcess(aux, i);
 		        
-		        System.err.println("Time slice is over! CPU " + i + " now runs: " + procLists[i].getFront().getPID());
+		        System.err.println("Time slice over! CPU " + i + " now runs: " + procLists[i].getFront().getPID());
             }	
 		}
 	}
@@ -224,8 +223,7 @@ class Kernel {
 	private synchronized void upIface(int cpuid, int intnum) {
 		// Calls the interface
 		// You need to inform the PIDs from the ready and disk Lists
-		//CÉSAR: NÃO DEVIA SER diskList.getFront().getPID() no segundo parâmetro?
-		SopaInterface.updateDisplay(procLists[cpuid].getFront().getPID(), readyList.getFront().getPID(), intnum);
+		SopaInterface.updateDisplay(cpuid, procLists[cpuid].getFront().getPID(), intnum);
 
 	}
 	
@@ -262,8 +260,6 @@ class Kernel {
 				}
 			}
 			else {
-		        //killProcess(curr_process); //???
-		        
 		        switch(dis[interruptNumber-5].getError()) {
 		            case 1: 
 		            	System.err.println("Error trying to read from disc "+0+" : ERRORCODE_SOMETHING_WRONG");

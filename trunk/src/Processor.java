@@ -84,7 +84,7 @@ class Processor extends Thread {
 			IR[2] = (RD>>>8) & 255;
 			IR[3] = RD & 255;
 			// print CPU status to check if it is ok
-			System.err.print("processor: "+id+ "PC= "+PC);
+			System.err.print("processor: "+id+ " PC= "+PC);
 			System.err.print(" IR="+IR[0]+" "+IR[1]+" "+IR[2]+" "+IR[3]+" ");
 
 			// Execute basic instructions of the architecture
@@ -96,8 +96,6 @@ class Processor extends Thread {
 			if(thisInt != 0) {
 				// Call the kernel passing the interrupt number
 				kernel.run(thisInt, id);
-				// Kernel handled the last interrupt
-				//hint.reset(thisInt);
 			}
 		}
 	}

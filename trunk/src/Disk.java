@@ -109,11 +109,11 @@ class Disk extends Thread {
 						System.err.println("OPERATION_READ");
 						readSize = 1;
 						readData[0] = diskImage[address];
-						break;
+					break;
 					case OPERATION_WRITE:
 						System.err.println("OPERATION_WRITE");
 						diskImage[address] = writeData;
-						break;
+					break;
 					case OPERATION_LOAD:
 						System.err.println("OPERATION_LOAD");
 						int diskIndex = address;
@@ -129,7 +129,7 @@ class Disk extends Thread {
 							}
 						}
 						readSize = bufferIndex;
-						break;
+					break;
 				}
 			}	
 			// Here goes the code that generates an interrupt

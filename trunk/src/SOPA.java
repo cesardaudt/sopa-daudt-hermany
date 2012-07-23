@@ -10,8 +10,8 @@ import javax.swing.*;
 
 public class SOPA {
 	private final static int CPUS = 2;
-	private final static int PARTITIONS = 6;
-	private final static int PARTITION_WORDS = 8;
+	private final static int PARTITIONS = 8;
+	private final static int PARTITION_WORDS = 128;
 
 	public static void main(String args[]) {
 		// The program models a complete computer with most HW components
@@ -50,6 +50,8 @@ public class SOPA {
 		//TODO: maybe use a for-loop (if we have more procs)
 		processors[0] = new Processor(0, int_controller, global_sych, memory, console_listener, timer, disk1, disk2, kernel);
 		processors[1] = new Processor(1, int_controller, global_sych, memory, console_listener, timer, disk1, disk2, kernel);
+		
+		kernel.initKernel(processors);
 		
 		// start all threads
 		//TODO: maybe use a for-loop (if we have more procs)
